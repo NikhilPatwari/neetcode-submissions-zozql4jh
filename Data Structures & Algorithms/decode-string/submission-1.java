@@ -1,0 +1,34 @@
+class Solution {
+    public String decodeString(String s) {
+        Stack<Character> st = new Stack<>();
+        for (char c : s.toCharArray()) {
+            if (c == ']') {
+                String temp = "";
+                while (st.peek() != '[') {
+                    temp = st.pop() + temp;
+                }
+                st.pop(); // pop [
+                int k = 0;
+                int j = 0;
+                while(!st.isEmpty() && Character.isDigit(st.peek())){
+                    k+= (st.pop() -'0') * Math.pow(10,j);
+                    j++;
+                }
+                for (int i = 0; i < k; i++) {
+                    for (char a : temp.toCharArray()) {
+                        st.push(a);
+                    }
+                }
+
+            } else {
+                st.push(c);
+            }
+        }
+        StringBuilder sb = new StringBuilder();
+        for (char ch : st) {
+            sb.append(ch);
+        }
+
+        return sb.toString();
+    }
+}
